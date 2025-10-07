@@ -33,6 +33,11 @@ app.get('/juros_simples', (req, res) => {
     res.render('juros_simples')
 });
 
+//rota juros compostos
+app.get('/juros_composto', (req, res) => {
+    res.render('juros_composto')
+});
+
 app.post('/juros_simples', (req, res) => {
     //Recebendo os dados dos campos do formulário
     const capital = req.body.capital;
@@ -42,6 +47,17 @@ app.post('/juros_simples', (req, res) => {
     const total = Number(capital) + Number(juros);
 
     res.render('juros_simples', {capital, taxa, tempo, juros, total});
+ })
+
+ app.post('/juros_composto', (req, res) => {
+    //Recebendo os dados dos campos do formulário
+    const capital = req.body.capital;
+    const taxa = req.body.taxa;
+    const tempo = req.body.tempo;
+    const total = capital * ((1 + taxa / 100) ** tempo  );
+    const juros = total - capital;
+
+    res.render('juros_composto', {capital, taxa, tempo, juros, total});
  })
 
 const porta = 3000;
